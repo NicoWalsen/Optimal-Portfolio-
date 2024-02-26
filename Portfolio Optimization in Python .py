@@ -1,21 +1,19 @@
-
-
 #IMPORTING MODULES
 import pandas as pd
 import yfinance as yf
 from datetime import datetime, timedelta
 import numpy as np
 from scipy.optimize import minimize
+import matplotlib.pyplot as plt
 
 #SET A LIST OF THE TICKERS WE WILL INCLUDE IN OUR PORTFOLIO
 tickers = ["SPY", "BND", "GLD", "QQQ", "VTI"]
-
 
 #Set the end date to today
 end_date = datetime.today()
 
 #SET THE START DATE TO 5 YEARS AGO
-start_date = end_date - timedelta(days = 20*365) # we will use 20 years from now to the past.
+start_date = end_date - timedelta(days = 20*365) # we will use 20 years from today to the past.
 print (start_date)
 print (end_date)
 
@@ -25,7 +23,7 @@ print (end_date)
 #Create an empty DataFrame to store the adjusted close prices
 adj_close_df = pd.DataFrame()
 
-#Download the close prices for each ticker
+#Downloading the close prices for each ticker, creating 
 for ticker in tickers: 
     data = yf.download(ticker,start=start_date,end=end_date)
     adj_close_df[ticker] = data['Adj Close']
@@ -33,11 +31,10 @@ for ticker in tickers:
 #Display the DataFrame
 adj_close_df
 
-
 ##CAlCULATE LOGNORMAL RETURNS##
 
 #Calculate the lognormal returns for each sticker
-log_returns = np.log(adj_close_df/adj_close_df.shift(1))
+log_returns = np.log(adj_close_df/adj_close_df.shift(1)) 
 
 #Drop any missing values
 log_returns = log_returns.dropna()
@@ -101,10 +98,7 @@ for ticker, weight in zip(tickers, optimal_weights):
     print(f"Sharpe Ratio:{optimal_sharpe_ratio:.4f}")
 
 
-#DISPLAY THE FINAL PORTFOLIO IN A PLOT
-
-import matplotlib.pyplot as plt
-
+#DISPLAY THE FINAL PORTFOLIO IN A PLOT#
 plt.figure(figsize = (10,6))
 plt.bar (tickers, optimal_weights)
 plt.xlabel('Assets')
