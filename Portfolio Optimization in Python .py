@@ -17,7 +17,6 @@ start_date = end_date - timedelta(days = 20*365) # we will use 20 years from tod
 print (start_date)
 print (end_date)
 
-
 ##DOWNLOAD ADJUSTED CLOSE PRICES##
 
 #Create an empty DataFrame to store the adjusted close prices
@@ -43,7 +42,6 @@ log_returns = log_returns.dropna()
 cov_matrix = log_returns.cov()*252  #We assume 252 working days in a year.
 cov_matrix
 
-
 ## DEFINING PORTFOLIO PERFORMANCE METRICS ##
 
 #Calculate the portfolio standars deviation
@@ -59,7 +57,6 @@ def expected_return (weights,log_returns):
 #Calculate the Sharpe Ratio
 def sharpe_ratio (weights, log_returns, cov_matrix, risk_free_rate):
     return (expected_return (weights,log_returns)-risk_free_rate)/standard_deviation (weights, cov_matrix)
-
 
 #Set the risk-free rate
 risk_free_rate = 0.02
@@ -96,7 +93,6 @@ for ticker, weight in zip(tickers, optimal_weights):
     print(f"Expected Annual Return: {optimal_portfolio_return:.4f}")
     print(f"Expected Volatility: {optimal_portfolio_volatility:.4f}")
     print(f"Sharpe Ratio:{optimal_sharpe_ratio:.4f}")
-
 
 #DISPLAY THE FINAL PORTFOLIO IN A PLOT#
 plt.figure(figsize = (10,6))
