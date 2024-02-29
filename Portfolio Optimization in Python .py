@@ -12,7 +12,7 @@ tickers = ["SPY", "BND", "GLD", "QQQ", "VTI"]
 #Set the end date to today
 end_date = datetime.today()
 
-#SET THE START DATE TO 5 YEARS AGO
+#SET THE START DATE TO 2' YEARS AGO
 start_date = end_date - timedelta(days = 20*365) # we will use 20 years from today to the past.
 print (start_date)
 print (end_date)
@@ -22,7 +22,7 @@ print (end_date)
 #Create an empty DataFrame to store the adjusted close prices
 adj_close_df = pd.DataFrame()
 
-#Downloading the close prices for each ticker, creating 
+#Downloading the close prices for each ticker, creating a dataframe called "adj_close_df"
 for ticker in tickers: 
     data = yf.download(ticker,start=start_date,end=end_date)
     adj_close_df[ticker] = data['Adj Close']
@@ -58,11 +58,10 @@ def expected_return (weights,log_returns):
 def sharpe_ratio (weights, log_returns, cov_matrix, risk_free_rate):
     return (expected_return (weights,log_returns)-risk_free_rate)/standard_deviation (weights, cov_matrix)
 
-#Set the risk-free rate
+#Set the risk-free rate to 2% by agreement.
 risk_free_rate = 0.02
 
 ##DEFINE THE FUNCTION TO MINIMIZE (NEGATIVE SHARPE RATIO)
-
 def neg_sharpe_ratio(weights, log_retunrs, cov_matrix, risk_free_rate):
     return -sharpe_ratio (weights, log_returns, cov_matrix, risk_free_rate)
 
