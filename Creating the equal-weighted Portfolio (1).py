@@ -36,7 +36,7 @@ ret.dot(weights)
 ret["EWP"] = ret.dot(weights) 
 ret.head()
 
-summary = ret.agg(["mean","std"]).T #Method .agg() allows you to apply a function or a list of function names to be executed along one of the axis of the DataFrame, default 0, which is the index (row) axis. Además, trasponemos la matriz para que se vea invertida.
+summary = ret.agg(["mean","std"]).T #Method .agg() allows you to apply a function or a list of function names to be executed along one of the axis of the DataFrame, default 0, which is the index (row) axis. We also change the order of columns by raws and vice versa.
 summary
 #Then we change the names of the columns to "Return" and "Risk" and we anualize both the Return and the Risk
 summary.columns = ["Return","Risk"] 
@@ -68,21 +68,21 @@ noa = len(stocks.columns)
 noa #number of assets
 nop = 100000
 nop #number of random porfolios 
-#We will create random list with numbers with 10 files and 6 columns.
+#We will create random list with numbers with 10 raws and 6 columns.
 np.random.random(10*6).reshape(10,6) 
 #If we run the previous cell once again, we will get different numbers each time. To avoid this we must include np.random.seed() method.
 np.random.seed(123) # If we run the previous code again, we will get always the same numbers [if we pass the number "123" to the method np.random.seed()]
 #we run again the same code that before but using "noa" and "nop"
 matrix = np.random.random(noa*nop).reshape(nop,noa)
 matrix
-#We generate the sum for each file of the previous matrix (axis=1). Keepdims = True means that we will mantain the same dimentions that the matrix of origin.
+#We generate the sum for each raw of the previous matrix (axis=1). Keepdims = True means that we will mantain the same dimentions of the origin matrix.
 matrix.sum(axis=1, keepdims=True) 
 
-#Now, we are going to normalize the values of the matrix "matrix". In order to do it, we will divide each of the values for file for the value calculated en each file of the matrix of 1 columns and 10 files.
+#Now, we are going to normalize the values of the matrix "matrix". In order to do it, we will divide each of the values of the raws by the value calculated en each raws on the matrix of 1 columns and 10 raws.
 #Moreover, we obtain that the sum of each file is equal to 1 and we acomplish the first restriction for our portfolios.
 weights = matrix / matrix.sum(axis=1, keepdims=True)
 weights 
-weights.sum(axis=1, keepdims=True) #demostrating that the sum of each file is equal to 1.
+weights.sum(axis=1, keepdims=True) #demostrating that the sum of each raw is equal to 1.
 
 port_ret = ret.dot(weights.T) #We multiply the matrix returns with transposed weights in order to obtain the daily returns for each of our 10 portfolios. 
 port_ret
@@ -127,13 +127,13 @@ plt.title ("Sharpe Ratio", fontsize=20)
 plt.grid()
 plt.show()
 
-#Looking forward to the higher Sharpe ratio random portfolio.
+#Looking for the higher Sharpe ratio random portfolio.
 port_summary.head()
 port_summary.describe()
 weights
-msrp = port_summary.Sharpe.idxmax() #We will get the number of file with the higher Sharpe Ratio with the method .idmax()
+msrp = port_summary.Sharpe.idxmax() #We will get the raw number with the higher Sharpe Ratio with the method .idmax()
 msrp
-msrp_p = port_summary.iloc[msrp] #We found that the higher Sharpe ratio is in the file 76879, also, we get the descriptive statistics.
+msrp_p = port_summary.iloc[msrp] #We found that the higher Sharpe ratio is in the raw # is 76879, also, we get the descriptive statistics.
 msrp_p
 msrp_w = weights[msrp,:] # With this we obtain the weights for this portfolio.
 msrp_w
