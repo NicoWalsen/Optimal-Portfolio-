@@ -1,4 +1,4 @@
-#IMPORTING MODULES
+#IMPORTING LIBRARIES AND MODULES
 import pandas as pd
 import yfinance as yf
 from datetime import datetime, timedelta
