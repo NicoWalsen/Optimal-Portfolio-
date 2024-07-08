@@ -30,8 +30,6 @@ for ticker in tickers:
 #Display the DataFrame
 adj_close_df
 
-##CAlCULATE LOGNORMAL RETURNS##
-
 #Calculate the lognormal returns for each sticker
 log_returns = np.log(adj_close_df/adj_close_df.shift(1)) 
 
